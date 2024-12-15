@@ -7,18 +7,39 @@ import lombok.Setter;
 
 
 @Entity
-@Getter
-
+@Data
 public class Doctor {
     @Id
     @GeneratedValue
     private Integer idDoctor;
 
-    @Setter
     @Column(nullable = false)
     private String name;
 
-    @Setter
     @OneToOne(mappedBy = "doctor")
     private DoctorLog doctorLog;
+
+    public Integer getIdDoctor() {
+        return idDoctor;
+    }
+
+    public void setIdDoctor(Integer idDoctor) {
+        this.idDoctor = idDoctor;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public DoctorLog getDoctorLog() {
+        return doctorLog;
+    }
+
+    public void setDoctorLog(DoctorLog doctorLog) {
+        this.doctorLog = doctorLog;
+    }
 }
