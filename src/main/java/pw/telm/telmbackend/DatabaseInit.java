@@ -14,7 +14,7 @@ public class DatabaseInit implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        doctorService.createDoctorWithLog("Jan Szary");
+        doctorService.createDoctorWithLog("Janusz Bury");
 
     }
 }

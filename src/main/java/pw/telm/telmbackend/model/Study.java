@@ -1,21 +1,87 @@
 package pw.telm.telmbackend.model;
 import jakarta.persistence.*;
-import lombok.Data;
+
 
 import java.sql.Date;
 import java.sql.Time;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
-@Data
+
 public class Study {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idStudy;
 
     private Date studyDate;
     private Time studyTime;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_patient", referencedColumnName = "idPatient", nullable = false)
     private Patient patient;
+
+    @OneToMany(mappedBy = "study", cascade = CascadeType.ALL)
+    private List<TextStudy> textStudies = new ArrayList<>();
+
+    @OneToMany(mappedBy = "study", cascade = CascadeType.ALL)
+    private List<Series> seriesList = new ArrayList<>();
+
+    public Integer getIdStudy() {
+        return idStudy;
+    }
+
+    public void setIdStudy(Integer idStudy) {
+        this.idStudy = idStudy;
+    }
+
+    public Date getStudyDate() {
+        return studyDate;
+    }
+
+    public void setStudyDate(Date studyDate) {
+        this.studyDate = studyDate;
+    }
+
+    public Time getStudyTime() {
+        return studyTime;
+    }
+
+    public void setStudyTime(Time studyTime) {
+        this.studyTime = studyTime;
+    }
+
+    public Patient getPatient() {
+        return patient;
+    }
+
+    public void setPatient(Patient patient) {
+        this.patient = patient;
+    }
+
+    public List<TextStudy> getTextStudies() {
+        return textStudies;
+    }
+
+    public void setTextStudies(List<TextStudy> textStudies) {
+        this.textStudies = textStudies;
+    }
+
+    public List<Series> getSeriesList() {
+        return seriesList;
+    }
+
+    public void setSeriesList(List<Series> seriesList) {
+        this.seriesList = seriesList;
+    }
+
+    @Override
+    public String toString() {
+        return "Study{" +
+                "idStudy=" + idStudy +
+                ", studyDate=" + studyDate +
+                ", studyTime=" + studyTime +
+                ", patient=" + patient +
+                '}';
+    }
 }

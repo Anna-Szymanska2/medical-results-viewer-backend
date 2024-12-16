@@ -1,17 +1,17 @@
 package pw.telm.telmbackend.model;
 import jakarta.persistence.*;
-import lombok.Data;
+
 
 @Entity
-@Data
+
 public class TextStudy {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idTextStudy;
 
     private String filePath;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_study", referencedColumnName = "idStudy", nullable = false)
     private Study study;
 }

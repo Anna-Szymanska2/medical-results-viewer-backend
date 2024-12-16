@@ -1,6 +1,6 @@
 package pw.telm.telmbackend.service;
 
-import lombok.RequiredArgsConstructor;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pw.telm.telmbackend.model.Doctor;
@@ -41,19 +41,21 @@ public class DoctorServiceImpl implements DoctorService{
         // Tworzenie przykładowego doktora
         Doctor doctor = new Doctor();
         doctor.setName(name);
+        Integer uniqueLogin = generateUniqueLogin();
+
+        // Tworzenie powiązanego DoctorLog
+        DoctorLog doctorLog = new DoctorLog();
+        doctorLog.setLogin(uniqueLogin);
+        doctorLog.setDoctor(doctor); // Powiązanie z doktorem
+        doctor.setDoctorLog(doctorLog);
 
         // Zapis doktora do bazy
         doctorRepository.save(doctor);
 
         // Generowanie unikalnego loginu
-        Integer uniqueLogin = generateUniqueLogin();
 
-        // Tworzenie powiązanego DoctorLog
-        DoctorLog doctorLog = new DoctorLog();
-        doctorLog.setLogin(uniqueLogin); // Przykładowy unikalny login
-        doctorLog.setDoctor(doctor); // Powiązanie z doktorem
 
         // Zapis DoctorLog do bazy
-        doctorLogRepository.save(doctorLog);
+       // doctorLogRepository.save(doctorLog);
     }
 }
