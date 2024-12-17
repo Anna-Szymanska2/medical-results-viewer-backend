@@ -3,8 +3,9 @@ package pw.telm.telmbackend.model;
 import jakarta.persistence.*;
 
 
+import java.sql.Date;
 import java.util.ArrayList;
-import java.util.Date;
+
 import java.util.List;
 
 @Entity
@@ -21,8 +22,12 @@ public class Patient {
     private String pesel;
     private Date birthDate;
 
-    @OneToOne(mappedBy = "patient")
+    @OneToOne(mappedBy = "patient", cascade = CascadeType.ALL)
     private PatientLog patientLog;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_doctor", referencedColumnName = "idDoctor", nullable = false)
+    private Doctor doctor;
     @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL)
     private List<Study> studies = new ArrayList<>();
 
@@ -80,6 +85,14 @@ public class Patient {
 
     public void setStudies(List<Study> studies) {
         this.studies = studies;
+    }
+
+    public Doctor getDoctor() {
+        return doctor;
+    }
+
+    public void setDoctor(Doctor doctor) {
+        this.doctor = doctor;
     }
 
     @Override

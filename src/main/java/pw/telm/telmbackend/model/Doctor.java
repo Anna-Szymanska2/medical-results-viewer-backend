@@ -2,6 +2,8 @@ package pw.telm.telmbackend.model;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Entity
@@ -16,6 +18,9 @@ public class Doctor {
 
     @OneToOne(mappedBy = "doctor", cascade = CascadeType.ALL)
     private DoctorLog doctorLog;
+
+    @OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL)
+    private List<Patient> patients = new ArrayList<>();
 
     public Integer getIdDoctor() {
         return idDoctor;

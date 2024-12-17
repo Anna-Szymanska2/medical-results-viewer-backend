@@ -10,6 +10,8 @@ import pw.telm.telmbackend.repository.DoctorRepository;
 
 import java.util.Random;
 
+import static pw.telm.telmbackend.Generators.generateLogin;
+
 @Service
 public class DoctorServiceImpl implements DoctorService{
 
@@ -21,11 +23,7 @@ public class DoctorServiceImpl implements DoctorService{
     private final DoctorRepository doctorRepository;
     private final DoctorLogRepository doctorLogRepository;
 
-    public static Integer generateLogin(){
-        Random random = new Random();
-        // Generujemy losową liczbę całkowitą w przedziale od 10000000 do 99999999
-        return 10000000 + random.nextInt(90000000);
-    }
+
     private boolean isLoginExists(Integer login) {
         return doctorLogRepository.existsByLogin(login);
     }
@@ -51,8 +49,6 @@ public class DoctorServiceImpl implements DoctorService{
 
         // Zapis doktora do bazy
         doctorRepository.save(doctor);
-
-        // Generowanie unikalnego loginu
 
 
         // Zapis DoctorLog do bazy
