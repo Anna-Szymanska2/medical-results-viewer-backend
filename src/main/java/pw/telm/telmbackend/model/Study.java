@@ -16,6 +16,7 @@ public class Study {
 
     private Date studyDate;
     private Time studyTime;
+    private String uidStudy;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_patient", referencedColumnName = "idPatient", nullable = false)
@@ -73,6 +74,14 @@ public class Study {
 
     public void setSeriesList(List<Series> seriesList) {
         this.seriesList = seriesList;
+    }
+
+    public String getUidStudy() {
+        return uidStudy;
+    }
+
+    public void setUidStudy(String uidStudy) {
+        this.uidStudy = uidStudy;
     }
 
     @Override

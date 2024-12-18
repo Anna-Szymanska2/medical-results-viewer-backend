@@ -75,6 +75,7 @@ public class DicomMetadataReader {
         Study study = new Study();
 
         list.read(dicomFile);
+        study.setUidStudy(getTagInformation(TagFromName.StudyInstanceUID));
         try {
             study.setStudyTime(Time.valueOf(convertTimeFormat(getTagInformation(TagFromName.StudyTime))));
         }
