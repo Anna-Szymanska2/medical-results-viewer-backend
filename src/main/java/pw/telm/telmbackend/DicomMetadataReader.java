@@ -76,6 +76,7 @@ public class DicomMetadataReader {
 
         list.read(dicomFile);
         study.setUidStudy(getTagInformation(TagFromName.StudyInstanceUID));
+        study.setDescription(getTagInformation(TagFromName.StudyDescription));
         try {
             study.setStudyTime(Time.valueOf(convertTimeFormat(getTagInformation(TagFromName.StudyTime))));
         }
@@ -151,7 +152,9 @@ public class DicomMetadataReader {
         try { image.setBitsAllocated(Integer.valueOf(getTagInformation(TagFromName.BitsAllocated))); } catch (Exception ignored) {}
         try { image.setBitsStored(Integer.valueOf(getTagInformation(TagFromName.BitsStored))); } catch (Exception ignored) {}
         try { image.setHighBit(Integer.valueOf(getTagInformation(TagFromName.HighBit))); } catch (Exception ignored) {}
-        try { image.setNumFrames(Integer.valueOf(getTagInformation(TagFromName.NumberOfFrames))); } catch (Exception ignored) {}
+        try { image.setNumFrames(Integer.valueOf(getTagInformation(TagFromName.NumberOfFrames))); } catch (Exception ignored) {
+            image.setNumFrames(1);
+        }
         try { image.setPixelRepresentation(Integer.valueOf(getTagInformation(TagFromName.PixelRepresentation))); } catch (Exception ignored) {}
         try { image.setSamplePerPixel(Integer.valueOf(getTagInformation(TagFromName.SamplesPerPixel))); } catch (Exception ignored) {}
 

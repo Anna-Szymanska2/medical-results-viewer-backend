@@ -2,6 +2,7 @@ package pw.telm.telmbackend;
 
 import java.sql.Date;
 import java.time.LocalDate;
+import java.util.Objects;
 import java.util.Random;
 
 public class Generators {
@@ -11,8 +12,8 @@ public class Generators {
         return 10000000 + random.nextInt(90000000);
     }
 
-    public static String generatePesel(Date birthDate, char gender) {
-        if (birthDate == null || (gender != 'M' && gender != 'F')) {
+    public static String generatePesel(Date birthDate, String gender) {
+        if (birthDate == null || (!Objects.equals(gender, "M") && !Objects.equals(gender, "F"))) {
             throw new IllegalArgumentException("Niepoprawne dane wejściowe");
         }
 
@@ -38,7 +39,7 @@ public class Generators {
 
         // Dziesiąta cyfra - płeć (parzysta dla F, nieparzysta dla M)
         int genderDigit = random.nextInt(5) * 2; // generuje parzystą cyfrę (0, 2, 4, 6, 8)
-        if (gender == 'M') {
+        if (gender.equals("M")) {
             genderDigit += 1; // zamienia na nieparzystą cyfrę (1, 3, 5, 7, 9)
         }
 
@@ -65,7 +66,7 @@ public class Generators {
     public static void main(String[] args) {
         // Przykładowe użycie funkcji
         Date birthDate = Date.valueOf("2002-05-15"); // data urodzenia
-        char gender = 'M'; // płeć: M - mężczyzna, F - kobieta
+        String gender = "M"; // płeć: M - mężczyzna, F - kobieta
 
         String pesel = generatePesel(birthDate, gender);
         System.out.println("Wygenerowany PESEL: " + pesel);

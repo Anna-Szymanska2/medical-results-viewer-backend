@@ -5,26 +5,30 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pw.telm.telmbackend.DicomMetadataReader;
 import pw.telm.telmbackend.model.*;
-import pw.telm.telmbackend.repository.DoctorLogRepository;
-import pw.telm.telmbackend.repository.PatientLogRepository;
-import pw.telm.telmbackend.repository.PatientRepository;
+import pw.telm.telmbackend.repository.*;
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.Date;
 
 import static pw.telm.telmbackend.Generators.generateLogin;
+import static pw.telm.telmbackend.Generators.generatePesel;
 
 @Service
 public class DicomServiceImpl implements DicomService{
-    public DicomServiceImpl(PatientRepository patientRepository, PatientLogRepository patientLogRepository, DoctorLogRepository doctorLogRepository) {
+    public DicomServiceImpl(PatientRepository patientRepository, PatientLogRepository patientLogRepository, DoctorLogRepository doctorLogRepository, StudyRepository studyRepository, SeriesRepository seriesRepository) {
         this.patientRepository = patientRepository;
         this.patientLogRepository = patientLogRepository;
         this.doctorLogRepository = doctorLogRepository;
+        this.studyRepository = studyRepository;
+        this.seriesRepository = seriesRepository;
     }
+
     private final PatientRepository patientRepository;
     private final PatientLogRepository patientLogRepository;
     private final DoctorLogRepository doctorLogRepository;
-
+    private final StudyRepository studyRepository;
+    private final SeriesRepository seriesRepository;
 
     @Transactional
     public void addDicom(String dicomFilePath, Doctor doctor, int index){
@@ -62,6 +66,7 @@ public class DicomServiceImpl implements DicomService{
             Patient patientFromDB = patientRepository.findByName(patientName).orElse(null);
             if (patientFromDB == null) {
                 patient.setDoctor(doctor);
+                patient.setPesel(generatePesel(patient.getBirthDate(),patient.getSex()));
                 // patientId = addPatient(patient, doctorId);
                 int login = generateLogin();
                 while (patientLogRepository.existsByLogin(login) || doctorLogRepository.existsByLogin(login)) {
@@ -78,13 +83,26 @@ public class DicomServiceImpl implements DicomService{
             }
 
             Study study = DicomMetadataReader.returnStudyFromDicom(dicomFilePath);
-            study.setPatient(patient);
-            patient.getStudies().add(study);
+            Study studyFromDB = studyRepository.findByUidStudy(study.getUidStudy()).orElse(null);
+            if(studyFromDB == null){
+                study.setPatient(patient);
+                patient.getStudies().add(study);
+            }else{
+                study = studyFromDB;
+            }
+
             // int studyId = addStudy(study, patientId);
             Series series = DicomMetadataReader.returnSeriesFromDicom(dicomFilePath);
-            series.setStudy(study);
-            //int seriesId = addSeries(series, studyId);
-            study.getSeriesList().add(series);
+            Series seriesFromDB = seriesRepository.findByUidSeries(series.getUidSeries()).orElse(null);
+
+            if(seriesFromDB == null){
+                series.setStudy(study);
+                //int seriesId = addSeries(series, studyId);
+                study.getSeriesList().add(series);
+            }else{
+                series = seriesFromDB;
+            }
+
             Image image = DicomMetadataReader.returnImageFromDicom(dicomFilePath);
             image.setSeries(series);
             series.getImages().add(image);

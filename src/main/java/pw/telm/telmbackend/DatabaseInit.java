@@ -42,6 +42,10 @@ public class DatabaseInit implements CommandLineRunner {
             dicomService.addDicom("src/main/resources/dicoms/dicom" + (i + 1) + ".dcm", doctor, i +1);
         }
 
+        for (int i = 20; i < 23; i++) {
+            dicomService.addDicom("src/main/resources/dicoms/dicom" + (i + 1), doctor, i +1);
+        }
+
 //        doctor.getDoctorLog().setEmail("email");
 //        doctorRepository.save(doctor);
 

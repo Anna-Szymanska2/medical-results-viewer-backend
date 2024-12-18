@@ -14,6 +14,7 @@ public class Study {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idStudy;
 
+    private String description;
     private Date studyDate;
     private Time studyTime;
     private String uidStudy;
@@ -82,6 +83,14 @@ public class Study {
 
     public void setUidStudy(String uidStudy) {
         this.uidStudy = uidStudy;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     @Override
