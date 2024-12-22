@@ -43,11 +43,11 @@ public class DatabaseInit implements CommandLineRunner {
         doctorService.createDoctorWithLog("Wiktor Bolibok");
         doctorService.createDoctorWithLog("Renata Szyc");
         Doctor doctor = doctorRepository.findByIdDoctor(1).orElse(null);
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 5; i++) {
             dicomService.addDicom("src/main/resources/dicoms/dicom" + (i + 1) + ".dcm", doctor, i +1);
         }
         doctor = doctorRepository.findByIdDoctor(2).orElse(null);
-        for (int i = 10; i < 20; i++) {
+        for (int i = 5; i < 20; i++) {
             dicomService.addDicom("src/main/resources/dicoms/dicom" + (i + 1) + ".dcm", doctor, i +1);
         }
         doctor = doctorRepository.findByIdDoctor(3).orElse(null);
