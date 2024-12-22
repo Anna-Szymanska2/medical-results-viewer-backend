@@ -1,0 +1,7 @@
+2023-10-10
+07:45:30
+Lipid profile
+Total_Cholesterol 210 mg/dL 125 200 H
+LDL 140 mg/dL 0 130 H
+HDL 50 mg/dL 40 60 ~
+Triglycerides 160 mg/dL 0 150 H

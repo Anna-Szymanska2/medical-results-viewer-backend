@@ -83,6 +83,7 @@ public class DicomServiceImpl implements DicomService{
             }
 
             Study study = DicomMetadataReader.returnStudyFromDicom(dicomFilePath);
+            study.setText(false);
             Study studyFromDB = studyRepository.findByUidStudy(study.getUidStudy()).orElse(null);
             if(studyFromDB == null){
                 study.setPatient(patient);

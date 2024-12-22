@@ -19,6 +19,8 @@ public class Study {
     private Time studyTime;
     private String uidStudy;
 
+    private boolean isText;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_patient", referencedColumnName = "idPatient", nullable = false)
     private Patient patient;
@@ -91,6 +93,14 @@ public class Study {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public boolean isText() {
+        return isText;
+    }
+
+    public void setText(boolean text) {
+        isText = text;
     }
 
     @Override

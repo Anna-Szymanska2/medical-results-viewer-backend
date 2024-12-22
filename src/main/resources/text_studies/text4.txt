@@ -1,0 +1,8 @@
+2023-09-05
+10:15:20
+Kidney function tests
+Creatinine 1.1 mg/dL 0.6 1.2 ~
+BUN 18 mg/dL 7 20 ~
+eGFR 85 mL/min/1.73m² 60 120 ~
+Potassium 4.2 mmol/L 3.5 5.1 ~
+Sodium 138 mmol/L 135 145 ~
