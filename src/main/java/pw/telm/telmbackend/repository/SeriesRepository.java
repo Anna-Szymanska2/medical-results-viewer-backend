@@ -8,4 +8,5 @@ import java.util.Optional;
 public interface SeriesRepository extends JpaRepository<Series,Integer> {
 
     Optional<Series> findByUidSeries(String uidSeries);
+    Optional<Series> findByIdSeries(Integer id);
 }
