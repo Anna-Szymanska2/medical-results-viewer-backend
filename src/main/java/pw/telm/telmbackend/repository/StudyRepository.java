@@ -23,6 +23,6 @@ public interface StudyRepository extends JpaRepository<Study,Integer> {
             "JOIN p.doctor d")
     List<ShortStudyDto> findShortStudies();
 
-
+    Optional<Study> findByIdStudy(Integer id);
 
 }

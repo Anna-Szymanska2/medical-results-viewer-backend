@@ -1,9 +1,18 @@
 package pw.telm.telmbackend.service;
 
 import org.springframework.stereotype.Service;
+import pw.telm.telmbackend.DTOs.mappers.StudyMapper;
+import pw.telm.telmbackend.DTOs.model.ImageDto;
+import pw.telm.telmbackend.DTOs.model.SeriesDto;
 import pw.telm.telmbackend.DTOs.model.ShortStudyDto;
+import pw.telm.telmbackend.DTOs.model.StudyDto;
+import pw.telm.telmbackend.model.Image;
+import pw.telm.telmbackend.model.Series;
+import pw.telm.telmbackend.model.Study;
 import pw.telm.telmbackend.repository.StudyRepository;
-
+import pw.telm.telmbackend.DTOs.mappers.ImageMapper;
+import pw.telm.telmbackend.DTOs.mappers.SeriesMapper;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -65,5 +74,21 @@ public class StudyServiceImpl implements StudyService{
 
     }
 
+    @Override
+    public StudyDto getStudyById(Integer idStudy) {
+        Study study = studyRepository.findByIdStudy(idStudy).get();
+        List<SeriesDto> seriesDtoList = new ArrayList<>();
+        List<Series> seriess = study.getSeriesList();
 
+        for (Series series : seriess) {
+            List<Image> images = series.getImages();
+            List<ImageDto> imageDtoList = new ArrayList<>();
+            for (Image image : images) {
+                imageDtoList.add(ImageMapper.toImageDto(image));
+            }
+            seriesDtoList.add(SeriesMapper.toSeriesDto(series, imageDtoList));
+        }
+        return StudyMapper.toStudyDto(study, seriesDtoList);
+
+    }
 }
