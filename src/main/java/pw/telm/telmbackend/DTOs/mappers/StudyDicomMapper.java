@@ -12,7 +12,7 @@ import java.util.List;
  * Mapper class to convert between domain entities and DTOs for Study objects.
  */
 @Component
-public class StudyMapper {
+public class StudyDicomMapper {
     /**
      * Converts a Study entity and a list of SeriesDto objects to a StudyDto.
      *
@@ -20,7 +20,7 @@ public class StudyMapper {
      * @param seriesDtoList the list of SeriesDto objects associated with the Study
      * @return a StudyDto object containing the data from the Study entity and the SeriesDto list
      */
-    public static StudyDicomDto toStudyDto(Study study, List<SeriesDto> seriesDtoList) {
+    public static StudyDicomDto toStudyDicomDto(Study study, List<SeriesDto> seriesDtoList) {
         StudyDicomDto studyDicomDto = new StudyDicomDto();
         studyDicomDto.setIdStudy(study.getIdStudy());
         studyDicomDto.setDescription(study.getDescription());

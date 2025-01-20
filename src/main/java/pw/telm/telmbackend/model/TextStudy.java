@@ -1,4 +1,5 @@
 package pw.telm.telmbackend.model;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 
@@ -16,6 +17,7 @@ public class TextStudy {
     private Double max;
     private String norm;
 
+    @JsonIgnore
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_study", referencedColumnName = "idStudy", nullable = false)
     private Study study;

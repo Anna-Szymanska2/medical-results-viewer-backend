@@ -1,11 +1,9 @@
 package pw.telm.telmbackend.service;
 
 import org.springframework.stereotype.Service;
-import pw.telm.telmbackend.DTOs.mappers.StudyMapper;
-import pw.telm.telmbackend.DTOs.model.ImageDto;
-import pw.telm.telmbackend.DTOs.model.SeriesDto;
-import pw.telm.telmbackend.DTOs.model.ShortStudyDto;
-import pw.telm.telmbackend.DTOs.model.StudyDicomDto;
+import pw.telm.telmbackend.DTOs.mappers.StudyDicomMapper;
+import pw.telm.telmbackend.DTOs.mappers.StudyTextMapper;
+import pw.telm.telmbackend.DTOs.model.*;
 import pw.telm.telmbackend.model.Image;
 import pw.telm.telmbackend.model.Series;
 import pw.telm.telmbackend.model.Study;
@@ -75,7 +73,7 @@ public class StudyServiceImpl implements StudyService{
     }
 
     @Override
-    public StudyDicomDto getStudyById(Integer idStudy) {
+    public StudyDicomDto getDicomStudyById(Integer idStudy) {
         Study study = studyRepository.findByIdStudy(idStudy).get();
         List<SeriesDto> seriesDtoList = new ArrayList<>();
         List<Series> seriess = study.getSeriesList();
@@ -88,7 +86,13 @@ public class StudyServiceImpl implements StudyService{
             }
             seriesDtoList.add(SeriesMapper.toSeriesDto(series, imageDtoList));
         }
-        return StudyMapper.toStudyDto(study, seriesDtoList);
+        return StudyDicomMapper.toStudyDicomDto(study, seriesDtoList);
 
+    }
+
+    @Override
+    public StudyTextDto getTextStudyById(Integer id) {
+        Study study = studyRepository.findByIdStudy(id).get();
+        return StudyTextMapper.toStudyTextDto(study);
     }
 }

@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pw.telm.telmbackend.DTOs.model.ShortStudyDto;
 import pw.telm.telmbackend.DTOs.model.StudyDicomDto;
+import pw.telm.telmbackend.DTOs.model.StudyTextDto;
 import pw.telm.telmbackend.service.SeriesService;
 import pw.telm.telmbackend.service.StudyService;
 
@@ -30,8 +31,13 @@ public class StudyController {
     }
 
     @GetMapping("/dicom/{id}")
-    public ResponseEntity<StudyDicomDto> getStudyById(@PathVariable Integer id) throws IOException {
-        return ResponseEntity.ok(studyService.getStudyById(id));
+    public ResponseEntity<StudyDicomDto> getDicomStudyById(@PathVariable Integer id) throws IOException {
+        return ResponseEntity.ok(studyService.getDicomStudyById(id));
+    }
+
+    @GetMapping("/text/{id}")
+    public ResponseEntity<StudyTextDto> getTextStudyById(@PathVariable Integer id) throws IOException {
+        return ResponseEntity.ok(studyService.getTextStudyById(id));
     }
 
     @PostMapping("/sorted-studies")

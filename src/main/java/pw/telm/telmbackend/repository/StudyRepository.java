@@ -11,12 +11,6 @@ public interface StudyRepository extends JpaRepository<Study,Integer> {
 
     Optional<Study> findByUidStudy(String uidStudy);
 
-//    @Query("SELECT s.idStudy, s.studyDate, d.name, p.name, s.isText, p.idPatient " +
-//            "FROM Study s " +
-//            "JOIN s.patient p " +
-//            "JOIN p.doctor d ")
-//    List<ShortStudyDto> findShortStudies();
-
     @Query("SELECT new pw.telm.telmbackend.DTOs.model.ShortStudyDto(s.idStudy, s.studyDate, d.name, p.name, s.isText, p.idPatient) " +
             "FROM Study s " +
             "JOIN s.patient p " +
