@@ -85,7 +85,6 @@ public class UserServiceImpl implements UserService {
             doctor.get().setOtpCode(otp); // Zapisz OTP
             doctorLogRepository.save(doctor.get());
             mailService.sendEmail(doctor.get().getEmail(),"OTP", otp);
-            System.out.println("DUPA");
             return;
         }
 
