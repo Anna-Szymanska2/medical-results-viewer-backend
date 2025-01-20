@@ -17,6 +17,10 @@ public interface PatientLogRepository extends JpaRepository<PatientLog, Integer>
     @Transactional
     @Query("UPDATE PatientLog p SET p.password = :encode WHERE p.login = :login")
     void updatePasswordByLogin(String encode, Integer login);
+    @Modifying
+    @Transactional
+    @Query("UPDATE PatientLog p SET p.email = :mail WHERE p.login = :login")
+    void updateEmailByLogin(char[] mail, Integer login);
 
 
 }

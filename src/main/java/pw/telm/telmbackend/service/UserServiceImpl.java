@@ -55,13 +55,27 @@ public class UserServiceImpl implements UserService {
     }
     @Override
     public UserDto register(RegisterDto registerDto) {
-        return patientLogRepository.findByLogin(registerDto.login())
-                .map(patient -> {
-                    patientLogRepository.updatePasswordByLogin(passwordEncoder.encode(CharBuffer.wrap(registerDto.password())), patient.getLogin());
-                    return UserMapper.patientLogToUserDto(patient);
-                })
-                .orElseThrow(() -> new AppException("User not found", HttpStatus.BAD_REQUEST));
+        Optional<DoctorLog> doctor = doctorLogRepository.findByLogin(registerDto.login());
+
+        if (doctor.isPresent()) {
+            doctorLogRepository.updatePasswordByLogin(passwordEncoder.encode(CharBuffer.wrap(registerDto.password())), doctor.get().getLogin());
+            doctorLogRepository.updateEmailByLogin(registerDto.email(), doctor.get().getLogin());
+            DoctorLog updatedDoctor = doctorLogRepository.findByLogin(registerDto.login()).get();
+            return UserMapper.doctorLogToUserDto(updatedDoctor);
+        }
+
+        Optional<PatientLog> patient = patientLogRepository.findByLogin(registerDto.login());
+        if (patient.isPresent()) {
+            patientLogRepository.updatePasswordByLogin(passwordEncoder.encode(CharBuffer.wrap(registerDto.password())), patient.get().getLogin());
+            patientLogRepository.updateEmailByLogin(registerDto.email(), doctor.get().getLogin());
+            PatientLog updatedPatient = patientLogRepository.findByLogin(registerDto.login()).get();
+            return UserMapper.patientLogToUserDto(updatedPatient);
+        }
+
+        throw new AppException("Użytkownik o takim kodzie nie znajduje się bazie danych", HttpStatus.BAD_REQUEST);
     }
+
+
     @Override
     public void generateAndSendOtp(Integer login) {
         String otp = String.format("%06d", new Random().nextInt(999999));
@@ -71,6 +85,7 @@ public class UserServiceImpl implements UserService {
             doctor.get().setOtpCode(otp); // Zapisz OTP
             doctorLogRepository.save(doctor.get());
             mailService.sendEmail(doctor.get().getEmail(),"OTP", otp);
+            System.out.println("DUPA");
             return;
         }
 
