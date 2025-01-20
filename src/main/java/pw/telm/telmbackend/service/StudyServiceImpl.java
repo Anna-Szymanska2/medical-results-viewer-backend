@@ -5,7 +5,7 @@ import pw.telm.telmbackend.DTOs.mappers.StudyMapper;
 import pw.telm.telmbackend.DTOs.model.ImageDto;
 import pw.telm.telmbackend.DTOs.model.SeriesDto;
 import pw.telm.telmbackend.DTOs.model.ShortStudyDto;
-import pw.telm.telmbackend.DTOs.model.StudyDto;
+import pw.telm.telmbackend.DTOs.model.StudyDicomDto;
 import pw.telm.telmbackend.model.Image;
 import pw.telm.telmbackend.model.Series;
 import pw.telm.telmbackend.model.Study;
@@ -75,7 +75,7 @@ public class StudyServiceImpl implements StudyService{
     }
 
     @Override
-    public StudyDto getStudyById(Integer idStudy) {
+    public StudyDicomDto getStudyById(Integer idStudy) {
         Study study = studyRepository.findByIdStudy(idStudy).get();
         List<SeriesDto> seriesDtoList = new ArrayList<>();
         List<Series> seriess = study.getSeriesList();

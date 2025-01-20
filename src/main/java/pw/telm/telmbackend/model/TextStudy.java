@@ -16,11 +16,9 @@ public class TextStudy {
     private Double max;
     private String norm;
 
-
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_study", referencedColumnName = "idStudy", nullable = false)
     private Study study;
-
     public Integer getIdTextStudy() {
         return idTextStudy;
     }

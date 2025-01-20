@@ -48,9 +48,8 @@ public class PatientServiceImpl implements PatientService{
             study.setText(true);
             study.setPatient(patient);
 
-            List<TextStudy> textStudies = new ArrayList<>();
-
             String line;
+            TextStudy textStudy = new TextStudy();
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(" ");
 
@@ -67,7 +66,7 @@ public class PatientServiceImpl implements PatientService{
                 String norm = parts[5];
 
                 // Tworzenie encji TextStudy
-                TextStudy textStudy = new TextStudy();
+
                 textStudy.setStudyName(studyName);
                 textStudy.setResult(result);
                 textStudy.setUnit(unit);
@@ -76,11 +75,9 @@ public class PatientServiceImpl implements PatientService{
                 textStudy.setNorm(norm);
                 textStudy.setStudy(study);
 
-                textStudies.add(textStudy);
             }
 
-            // Powiązanie listy TextStudy ze Study
-            study.setTextStudies(textStudies);
+            study.setTextStudy(textStudy);
 
             // Dodanie badania do listy badań pacjenta
             patient.getStudies().add(study);

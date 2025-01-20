@@ -10,7 +10,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pw.telm.telmbackend.DTOs.model.ShortStudyDto;
-import pw.telm.telmbackend.DTOs.model.StudyDto;
+import pw.telm.telmbackend.DTOs.model.StudyDicomDto;
 import pw.telm.telmbackend.service.SeriesService;
 import pw.telm.telmbackend.service.StudyService;
 
@@ -30,7 +30,7 @@ public class StudyController {
     }
 
     @GetMapping("/dicom/{id}")
-    public ResponseEntity<StudyDto> getStudyById(@PathVariable Integer id) throws IOException {
+    public ResponseEntity<StudyDicomDto> getStudyById(@PathVariable Integer id) throws IOException {
         return ResponseEntity.ok(studyService.getStudyById(id));
     }
 
