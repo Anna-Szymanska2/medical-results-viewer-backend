@@ -65,4 +65,8 @@ public class PatientLog {
     public void setPatient(Patient patient) {
         this.patient = patient;
     }
+
+    public Integer getId_patient() { return idPatientLog;}
+
+    public String getOtp() {return otpCode;}
 }

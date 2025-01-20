@@ -62,8 +62,10 @@ public class DoctorLog {
         return doctor;
     }
 
-    public void setDoctor(Doctor doctor) {
-        this.doctor = doctor;
-    }
+    public void setDoctor(Doctor doctor) {this.doctor = doctor;    }
+
+    public Integer getId_doctor() { return  idDoctorLog;}
+
+    public String getOtp() {return otpCode;}
 }
 
