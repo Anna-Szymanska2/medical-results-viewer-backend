@@ -12,6 +12,7 @@ import pw.telm.telmbackend.repository.DoctorLogRepository;
 import pw.telm.telmbackend.repository.PatientLogRepository;
 
 import java.nio.CharBuffer;
+import java.util.Arrays;
 import java.util.Optional;
 import java.util.Random;
 
@@ -42,7 +43,6 @@ public class UserServiceImpl implements UserService {
             generateAndSendOtp(user.getLogin());
             return user;
         }
-
         Optional<PatientLog> patient = patientLogRepository.findByLogin(loginDto.login());
         if (patient.isPresent() && passwordEncoder.matches(CharBuffer.wrap(loginDto.password()), patient.get().getPassword())) {
             UserDto user = UserMapper.patientLogToUserDto(patient.get());
@@ -67,7 +67,10 @@ public class UserServiceImpl implements UserService {
         Optional<PatientLog> patient = patientLogRepository.findByLogin(registerDto.login());
         if (patient.isPresent()) {
             patientLogRepository.updatePasswordByLogin(passwordEncoder.encode(CharBuffer.wrap(registerDto.password())), patient.get().getLogin());
-            patientLogRepository.updateEmailByLogin(registerDto.email(), doctor.get().getLogin());
+            System.out.println(registerDto.email());
+            System.out.println(registerDto.login());
+
+            patientLogRepository.updateEmailByLogin(registerDto.email(), patient.get().getLogin());
             PatientLog updatedPatient = patientLogRepository.findByLogin(registerDto.login()).get();
             return UserMapper.patientLogToUserDto(updatedPatient);
         }

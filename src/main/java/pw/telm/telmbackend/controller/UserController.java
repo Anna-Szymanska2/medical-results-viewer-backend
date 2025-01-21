@@ -42,12 +42,7 @@ public class UserController {
 
     @PostMapping("/register")
     public ResponseEntity<String> register(@RequestBody RegisterDto registerDto) {
-        if (!Arrays.equals(registerDto.password(), registerDto.password2())) {
-            return ResponseEntity.badRequest().body("Passwords do not match");
-        }
-        if (registerDto.password().length < 10) {
-            return ResponseEntity.badRequest().body("Password must be at least 10 characters long");
-        }
+
         userService.register(registerDto);
         return ResponseEntity.ok("User registered successfully");
     }

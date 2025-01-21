@@ -20,5 +20,5 @@ public interface DoctorLogRepository extends JpaRepository<DoctorLog, Integer>  
     @Modifying
     @Transactional
     @Query("UPDATE DoctorLog SET email = :mail WHERE login = :login")
-    int updateEmailByLogin(char[] mail, Integer login);
+    int updateEmailByLogin(String mail, Integer login);
 }
