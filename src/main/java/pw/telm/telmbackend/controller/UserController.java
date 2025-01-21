@@ -2,10 +2,7 @@ package pw.telm.telmbackend.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import pw.telm.telmbackend.dto.LoginDto;
 import pw.telm.telmbackend.dto.OtpDto;
 import pw.telm.telmbackend.dto.RegisterDto;
@@ -58,6 +55,6 @@ public class UserController {
             return ResponseEntity.badRequest().body("Invalid OTP");
         }
 
-        return ResponseEntity.ok("OTP verified. Access granted.");
+        return ResponseEntity.ok("OTP");
     }
 }

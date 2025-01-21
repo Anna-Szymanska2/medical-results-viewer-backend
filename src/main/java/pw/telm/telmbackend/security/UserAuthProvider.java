@@ -43,6 +43,7 @@ public class UserAuthProvider {
                 .withIssuedAt(now)
                 .withExpiresAt(validity)
                 .withClaim("role", user.getRole())
+                .withClaim("userLogin", user.getLogin())
                 .sign(algorithm);
     }
 
@@ -64,6 +65,6 @@ public class UserAuthProvider {
         Algorithm algorithm = Algorithm.HMAC256(secretKey);
         JWTVerifier verifier = JWT.require(algorithm).build();
         DecodedJWT decoded = verifier.verify(token);
-        return decoded.getClaim("userLogin").asInt();
+        return decoded.getClaim("userLogin").asInt(); // Odczytuje userLogin
     }
 }
