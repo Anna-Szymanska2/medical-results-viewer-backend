@@ -1,0 +1,84 @@
+package pw.telm.telmbackend.controller;
+
+import com.pixelmed.dicom.DicomException;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+import pw.telm.telmbackend.model.Doctor;
+import pw.telm.telmbackend.service.DicomService;
+import pw.telm.telmbackend.service.DoctorService;
+import pw.telm.telmbackend.service.UploadService;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+
+/**
+ * REST controller for handling file upload operations.
+ * Provides an endpoint to upload DICOM files and save them to the database.
+ */
+@RestController
+@RequestMapping("/upload")
+public class UploadController {
+
+    /**
+     * Service layer for performing upload operations.
+     */
+    private final UploadService uploadService;
+    private final DicomService dicomService;
+    private final DoctorService doctorService;
+    /**
+     * Component responsible for initializing the database.
+     */
+
+    public UploadController(UploadService uploadService, DicomService dicomService, DoctorService doctorService) {
+        this.uploadService = uploadService;
+        this.dicomService = dicomService;
+        this.doctorService = doctorService;
+    }
+
+    /**
+     * Handles file upload of DICOM files.
+     *
+     * @param file      the DICOM file to upload
+     * @param id_doctor the ID of the doctor associated with the uploaded file
+     * @return a {@link ResponseEntity} containing a map with a success message or error details
+     */
+    @PostMapping("/dicom")
+    public ResponseEntity<Map<String, Object>> upload(@RequestParam("file") MultipartFile file,
+                                                      @RequestParam("doctor") Integer id_doctor) {
+
+
+        DicomException dicomFileException = new DicomException("Nieprawidlowy rodzaj pliku");
+        Map<String, Object> responseMap = new HashMap<>();
+
+        File fileConverted = null;
+
+        try {
+            fileConverted = uploadService.convert(file);
+            if (!uploadService.checkIfDicom(fileConverted)) throw dicomFileException;
+
+
+            String dicomFilePath = uploadService.saveFile(file);
+            Doctor doctor = doctorService.findDoctorById(id_doctor);
+            dicomService.addDicom(dicomFilePath, doctor);
+            String message = "Plik został przesłany i zapisany pomyślnie.";
+
+            responseMap.put("message", message);
+            return ResponseEntity.ok(responseMap);
+
+        } catch (DicomException | IOException e) {
+            String message = "Błąd podczas wprowadzania pliku do bazy. Sprawdź plik. \n" + e;
+            responseMap.put("message", message);
+            return ResponseEntity.status(600).body(responseMap);
+        } finally {
+            if (fileConverted != null && fileConverted.exists()) {
+                fileConverted.delete();
+            }
+        }
+    }
+}

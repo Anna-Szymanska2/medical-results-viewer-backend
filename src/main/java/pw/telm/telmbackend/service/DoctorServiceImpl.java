@@ -80,4 +80,9 @@ public class DoctorServiceImpl implements DoctorService{
                 .collect(Collectors.toList());
 
     }
+
+    @Override
+    public Doctor findDoctorById(Integer idDoctor) {
+        return doctorRepository.findByIdDoctor(idDoctor).get();
+    }
 }

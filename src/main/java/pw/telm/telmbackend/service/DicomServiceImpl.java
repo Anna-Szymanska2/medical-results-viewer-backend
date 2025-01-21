@@ -31,7 +31,7 @@ public class DicomServiceImpl implements DicomService{
     private final SeriesRepository seriesRepository;
 
     @Transactional
-    public void addDicom(String dicomFilePath, Doctor doctor, int index){
+    public void addDicom(String dicomFilePath, Doctor doctor) {
         try {
             String outputPath = "src/main/resources/images";
             File images_folder = new File(outputPath);
