@@ -31,7 +31,6 @@ public class UserController {
     @PostMapping("/login")
     public ResponseEntity<UserDto> login(@RequestBody LoginDto loginDto) {
         UserDto user = userService.login(loginDto);
-        userService.generateAndSendOtp(user.getLogin());
 
         user.setToken(userAuthProvider.createToken(user));
         return ResponseEntity.ok(user);
