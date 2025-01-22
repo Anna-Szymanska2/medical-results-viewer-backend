@@ -27,10 +27,10 @@ public class SecurityConfig {
 
                 .csrf(AbstractHttpConfigurer::disable)
 
-//                // Wymuszanie HTTPS
-//                .requiresChannel(channel -> channel
-//                        .anyRequest().requiresSecure() // Wszystkie żądania wymagają HTTPS
-//                )
+                // Wymuszanie HTTPS
+                .requiresChannel(channel -> channel
+                        .anyRequest().requiresSecure() // Wszystkie żądania wymagają HTTPS
+                )
 
                 // Konfiguracja sesji jako bezstanowa
                 .sessionManagement(session -> session

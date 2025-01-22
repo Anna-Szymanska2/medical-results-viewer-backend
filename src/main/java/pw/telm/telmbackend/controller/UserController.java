@@ -10,7 +10,6 @@ import pw.telm.telmbackend.dto.UserDto;
 import pw.telm.telmbackend.security.UserAuthProvider;
 import pw.telm.telmbackend.service.UserService;
 
-import java.util.Arrays;
 
 /**
  * REST controller for handling user authentication and registration.
@@ -31,8 +30,6 @@ public class UserController {
     @PostMapping("/login")
     public ResponseEntity<UserDto> login(@RequestBody LoginDto loginDto) {
         UserDto user = userService.login(loginDto);
-        userService.generateAndSendOtp(user.getLogin());
-
         user.setToken(userAuthProvider.createToken(user));
         return ResponseEntity.ok(user);
     }
@@ -48,7 +45,6 @@ public class UserController {
     public ResponseEntity<String> verifyOtp(@RequestBody OtpDto otpDto, HttpServletRequest request) {
         String token = request.getHeader("Authorization").replace("Bearer ", "");
         Integer login = userAuthProvider.getLoginFromToken(token);
-
         boolean valid = userService.verifyOtp(login, String.valueOf(otpDto.otp()));
 
         if (!valid) {

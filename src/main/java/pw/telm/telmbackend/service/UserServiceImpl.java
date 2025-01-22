@@ -67,8 +67,7 @@ public class UserServiceImpl implements UserService {
         Optional<PatientLog> patient = patientLogRepository.findByLogin(registerDto.login());
         if (patient.isPresent()) {
             patientLogRepository.updatePasswordByLogin(passwordEncoder.encode(CharBuffer.wrap(registerDto.password())), patient.get().getLogin());
-            System.out.println(registerDto.email());
-            System.out.println(registerDto.login());
+
 
             patientLogRepository.updateEmailByLogin(registerDto.email(), patient.get().getLogin());
             PatientLog updatedPatient = patientLogRepository.findByLogin(registerDto.login()).get();
@@ -104,6 +103,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean verifyOtp(Integer login, String otp) {
         Optional<DoctorLog> doctor = doctorLogRepository.findByLogin(login);
+
         if (doctor.isPresent() && otp.equals(doctor.get().getOtp())) {
             doctor.get().setOtpCode(null);
             doctorLogRepository.save(doctor.get());
