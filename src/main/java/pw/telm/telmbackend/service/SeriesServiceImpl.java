@@ -19,4 +19,9 @@ public class SeriesServiceImpl implements SeriesService{
         return series.getImages().get(image_number-1).getFrames().get(frame_number-1).getFilePath();
 
     }
+
+    @Override
+    public String getPathBySeriesId(Integer id) {
+        return  seriesRepository.findByIdSeries(id).orElse(null).getStudy().getPath();
+    }
 }

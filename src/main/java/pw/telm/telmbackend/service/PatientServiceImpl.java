@@ -78,6 +78,7 @@ public class PatientServiceImpl implements PatientService{
             study.setDescription(description);
             study.setText(true);
             study.setPatient(patient);
+            study.setPath(filePath);
 
             String line;
             List<TextStudy> textStudies = new ArrayList<>();

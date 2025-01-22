@@ -86,6 +86,7 @@ public class DicomServiceImpl implements DicomService{
             study.setText(false);
             Study studyFromDB = studyRepository.findByUidStudy(study.getUidStudy()).orElse(null);
             if(studyFromDB == null){
+                study.setPath(dicomFilePath);
                 study.setPatient(patient);
                 patient.getStudies().add(study);
             }else{

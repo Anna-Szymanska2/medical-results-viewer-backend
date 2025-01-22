@@ -18,6 +18,7 @@ public class Study {
     private Date studyDate;
     private Time studyTime;
     private String uidStudy;
+    private String path;
 
     private boolean isText;
 
@@ -103,6 +104,14 @@ public class Study {
 
     public void setText(boolean text) {
         isText = text;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
     }
 
     @Override
