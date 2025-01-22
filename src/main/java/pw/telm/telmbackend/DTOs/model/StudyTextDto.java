@@ -5,6 +5,8 @@ import pw.telm.telmbackend.model.TextStudy;
 
 import java.sql.Date;
 import java.sql.Time;
+import java.util.ArrayList;
+import java.util.List;
 
 public class StudyTextDto {
 
@@ -15,7 +17,7 @@ public class StudyTextDto {
     private Integer idPatient;
     private String patientName;
     private String description;
-    private TextStudy textStudy;
+    private List<TextStudy> textStudies = new ArrayList<>();
 
     public Integer getIdStudy() {
         return idStudy;
@@ -65,11 +67,11 @@ public class StudyTextDto {
         this.description = description;
     }
 
-    public TextStudy getTextStudy() {
-        return textStudy;
+    public List<TextStudy> getTextStudies() {
+        return textStudies;
     }
 
-    public void setTextStudy(TextStudy textStudy) {
-        this.textStudy = textStudy;
+    public void setTextStudies(List<TextStudy> textStudies) {
+        this.textStudies = textStudies;
     }
 }

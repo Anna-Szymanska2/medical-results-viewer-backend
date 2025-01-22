@@ -25,8 +25,9 @@ public class Study {
     @JoinColumn(name = "id_patient", referencedColumnName = "idPatient", nullable = false)
     private Patient patient;
 
-    @OneToOne(mappedBy = "study", cascade = CascadeType.ALL)
-    private TextStudy textStudy;
+    @OneToMany(mappedBy = "study", cascade = CascadeType.ALL)
+    private List<TextStudy> textStudies = new ArrayList<>();
+
 
     @OneToMany(mappedBy = "study", cascade = CascadeType.ALL)
     private List<Series> seriesList = new ArrayList<>();
@@ -63,13 +64,14 @@ public class Study {
         this.patient = patient;
     }
 
-    public TextStudy getTextStudy() {
-        return textStudy;
+    public List<TextStudy> getTextStudies() {
+        return textStudies;
     }
 
-    public void setTextStudy(TextStudy textStudy) {
-        this.textStudy = textStudy;
+    public void setTextStudies(List<TextStudy> textStudies) {
+        this.textStudies = textStudies;
     }
+
 
     public List<Series> getSeriesList() {
         return seriesList;

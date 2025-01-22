@@ -17,7 +17,7 @@ public class StudyTextMapper {
         studyTextDto.setStudyDate(study.getStudyDate());
         studyTextDto.setStudyTime(study.getStudyTime());
         studyTextDto.setIdPatient(study.getPatient().getIdPatient());
-        studyTextDto.setTextStudy(study.getTextStudy());
+        studyTextDto.setTextStudies(study.getTextStudies());
         studyTextDto.setPatientName(study.getPatient().getName());
         return studyTextDto;
     }

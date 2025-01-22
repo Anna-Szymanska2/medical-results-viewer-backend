@@ -18,7 +18,7 @@ public class TextStudy {
     private String norm;
 
     @JsonIgnore
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_study", referencedColumnName = "idStudy", nullable = false)
     private Study study;
     public Integer getIdTextStudy() {
