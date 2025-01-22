@@ -8,6 +8,8 @@ import pw.telm.telmbackend.service.DicomService;
 import pw.telm.telmbackend.service.DoctorService;
 import pw.telm.telmbackend.service.PatientService;
 
+import java.io.IOException;
+
 
 @Component
 public class DatabaseInit implements CommandLineRunner {
@@ -38,7 +40,7 @@ public class DatabaseInit implements CommandLineRunner {
 
     }
 
-    public void initializeDB(){
+    public void initializeDB() throws IOException {
         doctorService.createDoctorWithLog("Janusz Bury");
         doctorService.createDoctorWithLog("Wiktor Bolibok");
         doctorService.createDoctorWithLog("Renata Szyc");

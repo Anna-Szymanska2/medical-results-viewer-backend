@@ -22,12 +22,12 @@ public class UploadServiceImpl implements UploadService{
      * @throws DicomException if the uploaded file is not a valid DICOM file
      */
     @Override
-    public String saveFile(MultipartFile file) throws IOException {
-        Path dicomPath = Paths.get("src/main/resources/dicoms/");
-        if (!Files.exists(dicomPath)) {
-            Files.createDirectories(dicomPath);
+    public String saveFile(MultipartFile file, String startPath) throws IOException {
+        Path path = Paths.get(startPath);
+        if (!Files.exists(path)) {
+            Files.createDirectories(path);
         }
-        Path filePath = dicomPath.resolve(Objects.requireNonNull(file.getOriginalFilename()));
+        Path filePath = path.resolve(Objects.requireNonNull(file.getOriginalFilename()));
         Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
         return filePath.toString();
     }
@@ -41,7 +41,7 @@ public class UploadServiceImpl implements UploadService{
      */
     @Override
     public File convert(MultipartFile file) throws IOException {
-        File tempDir = Files.createTempDirectory("dicom_temp").toFile();
+        File tempDir = Files.createTempDirectory("temp").toFile();
         File convFile = new File(tempDir, Objects.requireNonNull(file.getOriginalFilename()));
         try (FileOutputStream fos = new FileOutputStream(convFile)) {
             fos.write(file.getBytes());
@@ -70,5 +70,11 @@ public class UploadServiceImpl implements UploadService{
             }
         }
         return true;
+    }
+
+    @Override
+    public boolean isTextFile(File file){
+        String fileName = file.getName().toLowerCase();
+        return fileName.endsWith(".txt");
     }
 }
