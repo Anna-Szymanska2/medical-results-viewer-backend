@@ -28,9 +28,15 @@ public class UploadServiceImpl implements UploadService{
             Files.createDirectories(path);
         }
         Path filePath = path.resolve(Objects.requireNonNull(file.getOriginalFilename()));
-        Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
+
+        // Poprawne zamknięcie InputStream po skopiowaniu pliku
+        try (InputStream inputStream = file.getInputStream()) {
+            Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
+        }
+
         return filePath.toString();
     }
+
 
     /**
      * Converts the uploaded multipart file to a {@link File}.
@@ -41,13 +47,18 @@ public class UploadServiceImpl implements UploadService{
      */
     @Override
     public File convert(MultipartFile file) throws IOException {
+        // Używamy unikalnego folderu tymczasowego dla każdego pliku
         File tempDir = Files.createTempDirectory("temp").toFile();
         File convFile = new File(tempDir, Objects.requireNonNull(file.getOriginalFilename()));
+
+        // Blok try-with-resources, aby upewnić się, że FileOutputStream jest zamknięty
         try (FileOutputStream fos = new FileOutputStream(convFile)) {
             fos.write(file.getBytes());
         }
+
         return convFile;
     }
+
 
     /**
      * Checks if the specified file is a valid DICOM file.

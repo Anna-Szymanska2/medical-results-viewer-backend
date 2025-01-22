@@ -86,38 +86,42 @@ public class UploadController {
 
     @PostMapping("/text")
     public ResponseEntity<Map<String, Object>> uploadText(@RequestParam("file") MultipartFile file,
-                                                      @RequestParam("patientName")String patientName){
-
+                                                          @RequestParam("patientName") String patientName) {
         Map<String, Object> responseMap = new HashMap<>();
-
         File fileConverted = null;
 
         try {
+            // Konwersja pliku na File
             fileConverted = uploadService.convert(file);
-            if (!uploadService.isTextFile(fileConverted)) throw new NotTextException("Plik ma niepoprawny format (nie .txt)");
 
+            // Sprawdzenie, czy jest to plik tekstowy
+            if (!uploadService.isTextFile(fileConverted)) {
+                throw new NotTextException("Plik ma niepoprawny format (nie .txt)");
+            }
+
+            // Zapis pliku
             String textFilePath = uploadService.saveFile(file, "src/main/resources/text_studies/");
-           // patientService.findOrCreatePatient(patientName, doctorId);
-            patientService.parseAndSaveStudy(textFilePath, patientName);
-            String message = "Plik został przesłany i zapisany pomyślnie.";
 
-            responseMap.put("message", message);
+            // Parsowanie i zapis danych pacjenta
+            patientService.parseAndSaveStudy(textFilePath, patientName);
+
+            responseMap.put("message", "Plik został przesłany i zapisany pomyślnie.");
             return ResponseEntity.ok(responseMap);
 
-        } catch (IOException  | IllegalArgumentException e) {
-            String message = "Błąd podczas wprowadzania pliku do bazy. Sprawdź plik. \n" + e;
-            responseMap.put("message", message);
-            return ResponseEntity.status(500).body(responseMap);
-
-        } catch (NotTextException e){
+        } catch (NotTextException e) {
             responseMap.put("message", e.getMessage());
             return ResponseEntity.status(600).body(responseMap);
 
-        }
-            finally {
+        } catch (IOException e) {
+            responseMap.put("message", "Błąd podczas przetwarzania pliku: " + e.getMessage());
+            return ResponseEntity.status(500).body(responseMap);
+
+        } finally {
+            // Usuwanie pliku tymczasowego, jeśli istnieje
             if (fileConverted != null && fileConverted.exists()) {
                 fileConverted.delete();
             }
         }
     }
+
 }
