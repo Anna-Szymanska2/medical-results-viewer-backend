@@ -11,5 +11,6 @@ public interface DownloadService {
      * @param id the ID of the file
      * @return a {@link String} representing the file path
      */
-    String getPathById(Integer id);
+    String getDicomPathById(Integer id);
+    String getTextPathById(Integer id);
 }

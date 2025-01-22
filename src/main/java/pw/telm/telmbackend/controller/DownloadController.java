@@ -30,9 +30,9 @@ public class DownloadController {
     public DownloadController(DownloadService downloadService) {
         this.downloadService = downloadService;
     }
-    @GetMapping("/{seriesId}")
+    @GetMapping("dicom/{seriesId}")
     public ResponseEntity<Resource> downloadDicom(@PathVariable Integer seriesId) throws IOException {
-        String path = downloadService.getPathById(seriesId);
+        String path = downloadService.getDicomPathById(seriesId);
 
         Resource resource = new FileSystemResource(path);
 
@@ -46,4 +46,21 @@ public class DownloadController {
 
         return new ResponseEntity<>(resource, headers, HttpStatus.OK);
     }
+    @GetMapping("text/{textId}")
+    public ResponseEntity<Resource> downloadText(@PathVariable Integer textId) throws IOException {
+        String path = downloadService.getTextPathById(textId);
+
+        Resource resource = new FileSystemResource(path);
+
+        if (!resource.exists()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.MULTIPART_FORM_DATA);
+        headers.setContentLength(resource.contentLength());
+
+        return new ResponseEntity<>(resource, headers, HttpStatus.OK);
+    }
+
 }
