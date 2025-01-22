@@ -46,9 +46,9 @@ public class DownloadController {
 
         return new ResponseEntity<>(resource, headers, HttpStatus.OK);
     }
-    @GetMapping("text/{textId}")
-    public ResponseEntity<Resource> downloadText(@PathVariable Integer textId) throws IOException {
-        String path = downloadService.getTextPathById(textId);
+    @GetMapping("text/{studyId}")
+    public ResponseEntity<Resource> downloadText(@PathVariable Integer studyId) throws IOException {
+        String path = downloadService.getTextPathById(studyId);
 
         Resource resource = new FileSystemResource(path);
 

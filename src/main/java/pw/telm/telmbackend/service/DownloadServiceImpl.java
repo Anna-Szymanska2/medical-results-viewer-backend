@@ -1,7 +1,7 @@
 package pw.telm.telmbackend.service;
 
 import org.springframework.stereotype.Service;
-import pw.telm.telmbackend.repository.TextStudyRepository;
+import pw.telm.telmbackend.repository.StudyRepository;
 
 /**
  * Implementation of {@link DownloadService} that provides methods to retrieve file paths by ID.
@@ -13,12 +13,13 @@ public class DownloadServiceImpl implements DownloadService {
      * Repository for accessing image data.
      */
     private final SeriesService seriesService;
-    private final TextStudyRepository textStudyRepository;
+    private final StudyRepository studyRepository;
 
-    public DownloadServiceImpl(SeriesService seriesService, TextStudyRepository textStudyRepository) {
+    public DownloadServiceImpl(SeriesService seriesService, StudyRepository studyRepository) {
         this.seriesService = seriesService;
-        this.textStudyRepository = textStudyRepository;
+        this.studyRepository = studyRepository;
     }
+
 
     /**
      * Retrieves the file path associated with the given ID.
@@ -33,6 +34,6 @@ public class DownloadServiceImpl implements DownloadService {
 
     @Override
     public String getTextPathById(Integer id) {
-        return textStudyRepository.findByIdTextStudy(id).get().getStudy().getPath();
+        return studyRepository.findByIdStudy(id).get().getPath();
     }
 }
