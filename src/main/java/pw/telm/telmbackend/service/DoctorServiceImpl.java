@@ -73,6 +73,11 @@ public class DoctorServiceImpl implements DoctorService{
     }
 
     @Override
+    public List<Doctor> getAllWholeDoctors() {
+        return doctorRepository.findAll();
+    }
+
+    @Override
     public List<PatientDto> getPatientsByDoctorId(Integer id) {
         List<Patient> patients = patientRepository.findByDoctor_IdDoctor(id);
         return patients.stream()
