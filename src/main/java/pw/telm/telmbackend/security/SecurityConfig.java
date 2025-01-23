@@ -39,7 +39,7 @@ public class SecurityConfig {
 
                 // Reguły autoryzacji
                 .authorizeHttpRequests(requests -> requests
-                        .requestMatchers("/auth/**").permitAll()
+                        .requestMatchers("/**").permitAll()
                         .anyRequest().authenticated()
                 );
 

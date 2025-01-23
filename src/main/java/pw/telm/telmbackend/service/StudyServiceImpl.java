@@ -65,9 +65,7 @@ public class StudyServiceImpl implements StudyService{
                     .filter(dto -> dto.getStudyDate().before(endDate))
                     .collect(Collectors.toList());
         }
-        for (ShortStudyDto shortStudyDto: shortStudyDtos) {
-            System.out.println(shortStudyDto);
-        }
+
         return shortStudyDtos;
 
     }

@@ -31,7 +31,7 @@ public class DatabaseInit implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-     //   initializeDB();
+       // initializeDB();
 
 
 
