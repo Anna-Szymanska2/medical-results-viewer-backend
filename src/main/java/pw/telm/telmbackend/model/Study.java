@@ -28,6 +28,7 @@ public class Study {
     @OneToMany(mappedBy = "study", cascade = CascadeType.ALL)
     private List<TextStudy> textStudies = new ArrayList<>();
 
+
     @OneToMany(mappedBy = "study", cascade = CascadeType.ALL)
     private List<Series> seriesList = new ArrayList<>();
 
@@ -70,6 +71,7 @@ public class Study {
     public void setTextStudies(List<TextStudy> textStudies) {
         this.textStudies = textStudies;
     }
+
 
     public List<Series> getSeriesList() {
         return seriesList;
