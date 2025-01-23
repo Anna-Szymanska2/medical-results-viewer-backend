@@ -30,9 +30,9 @@ public class DownloadController {
     public DownloadController(DownloadService downloadService) {
         this.downloadService = downloadService;
     }
-    @GetMapping("dicom/{seriesId}")
-    public ResponseEntity<Resource> downloadDicom(@PathVariable Integer seriesId) throws IOException {
-        String path = downloadService.getDicomPathById(seriesId);
+    @GetMapping("/dicom/{seriesId}/{imageNumber}")
+    public ResponseEntity<Resource> downloadDicom(@PathVariable Integer seriesId, @PathVariable Integer imageNumber) throws IOException {
+        String path = downloadService.getDicomPathById(seriesId, imageNumber);
 
         Resource resource = new FileSystemResource(path);
 
@@ -46,7 +46,7 @@ public class DownloadController {
 
         return new ResponseEntity<>(resource, headers, HttpStatus.OK);
     }
-    @GetMapping("text/{studyId}")
+    @GetMapping("/text/{studyId}")
     public ResponseEntity<Resource> downloadText(@PathVariable Integer studyId) throws IOException {
         String path = downloadService.getTextPathById(studyId);
 

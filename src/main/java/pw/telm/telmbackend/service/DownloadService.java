@@ -8,9 +8,10 @@ public interface DownloadService {
     /**
      * Retrieves the file path associated with the given ID.
      *
-     * @param id the ID of the file
+     * @param id          the ID of the file
+     * @param imageNumber
      * @return a {@link String} representing the file path
      */
-    String getDicomPathById(Integer id);
+    String getDicomPathById(Integer id, Integer imageNumber);
     String getTextPathById(Integer id);
 }

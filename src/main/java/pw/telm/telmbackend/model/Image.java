@@ -12,6 +12,7 @@ public class Image {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idImage;
 
+    String path;
     private String type;
     private Integer instance;
     private Integer samplePerPixel;
@@ -38,6 +39,14 @@ public class Image {
 
     public void setIdImage(Integer idImage) {
         this.idImage = idImage;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
     }
 
     public String getType() {

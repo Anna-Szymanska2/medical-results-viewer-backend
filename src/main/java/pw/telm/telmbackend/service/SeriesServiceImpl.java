@@ -21,7 +21,7 @@ public class SeriesServiceImpl implements SeriesService{
     }
 
     @Override
-    public String getPathBySeriesId(Integer id) {
-        return  seriesRepository.findByIdSeries(id).orElse(null).getStudy().getPath();
+    public String getPathBySeriesId(Integer id, Integer imageNumber) {
+        return  seriesRepository.findByIdSeries(id).orElse(null).getImages().get(imageNumber).getPath();
     }
 }

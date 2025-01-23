@@ -24,12 +24,13 @@ public class DownloadServiceImpl implements DownloadService {
     /**
      * Retrieves the file path associated with the given ID.
      *
-     * @param id the ID of the file
+     * @param id          the ID of the file
+     * @param imageNumber
      * @return a {@link String} representing the file path
      */
     @Override
-    public String getDicomPathById(Integer id) {
-        return seriesService.getPathBySeriesId(id);
+    public String getDicomPathById(Integer id, Integer imageNumber) {
+        return seriesService.getPathBySeriesId(id, imageNumber);
     }
 
     @Override
