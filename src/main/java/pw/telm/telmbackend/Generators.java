@@ -11,6 +11,10 @@ public class Generators {
         // Generujemy losową liczbę całkowitą w przedziale od 10000000 do 99999999
         return 10000000 + random.nextInt(90000000);
     }
+    public String generateOtpCode() {
+        // Implementacja generowania OTP (np. 6-cyfrowy kod)
+        return String.valueOf((int)(Math.random() * 1000000));
+    }
 
     public static String generatePesel(Date birthDate, String gender) {
         if (birthDate == null || (!Objects.equals(gender, "M") && !Objects.equals(gender, "F"))) {

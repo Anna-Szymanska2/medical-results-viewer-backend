@@ -9,7 +9,6 @@ import pw.telm.telmbackend.repository.*;
 
 import java.io.File;
 import java.io.IOException;
-import java.sql.Date;
 
 import static pw.telm.telmbackend.Generators.generateLogin;
 import static pw.telm.telmbackend.Generators.generatePesel;

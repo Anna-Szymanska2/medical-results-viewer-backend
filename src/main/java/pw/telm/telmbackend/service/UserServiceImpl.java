@@ -1,5 +1,6 @@
 package pw.telm.telmbackend.service;
 
+import org.springframework.cache.CacheManager;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -12,7 +13,6 @@ import pw.telm.telmbackend.repository.DoctorLogRepository;
 import pw.telm.telmbackend.repository.PatientLogRepository;
 
 import java.nio.CharBuffer;
-import java.util.Arrays;
 import java.util.Optional;
 import java.util.Random;
 
