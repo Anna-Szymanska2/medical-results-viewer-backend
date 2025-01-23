@@ -3,10 +3,10 @@ package pw.telm.telmbackend.controller;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pw.telm.telmbackend.dto.LoginDto;
-import pw.telm.telmbackend.dto.OtpDto;
-import pw.telm.telmbackend.dto.RegisterDto;
-import pw.telm.telmbackend.dto.UserDto;
+import pw.telm.telmbackend.DTOs.model.LoginDto;
+import pw.telm.telmbackend.DTOs.model.OtpDto;
+import pw.telm.telmbackend.DTOs.model.RegisterDto;
+import pw.telm.telmbackend.DTOs.model.UserDto;
 import pw.telm.telmbackend.security.UserAuthProvider;
 import pw.telm.telmbackend.service.UserService;
 

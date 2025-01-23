@@ -1,4 +1,4 @@
-package pw.telm.telmbackend.dto;
+package pw.telm.telmbackend.DTOs.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 

@@ -1,4 +1,4 @@
-package pw.telm.telmbackend.exeption;
+package pw.telm.telmbackend.exception;
 
 
 import org.springframework.http.HttpStatus;

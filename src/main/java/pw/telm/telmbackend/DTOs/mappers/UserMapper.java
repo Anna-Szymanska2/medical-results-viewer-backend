@@ -1,5 +1,6 @@
-package pw.telm.telmbackend.dto;
+package pw.telm.telmbackend.DTOs.mappers;
 
+import pw.telm.telmbackend.DTOs.model.UserDto;
 import pw.telm.telmbackend.model.DoctorLog;
 import pw.telm.telmbackend.model.PatientLog;
 

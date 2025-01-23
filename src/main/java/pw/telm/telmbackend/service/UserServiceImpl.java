@@ -1,11 +1,13 @@
 package pw.telm.telmbackend.service;
 
-import org.springframework.cache.CacheManager;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import pw.telm.telmbackend.dto.*;
-import pw.telm.telmbackend.exeption.AppException;
+import pw.telm.telmbackend.DTOs.mappers.UserMapper;
+import pw.telm.telmbackend.DTOs.model.LoginDto;
+import pw.telm.telmbackend.DTOs.model.RegisterDto;
+import pw.telm.telmbackend.DTOs.model.UserDto;
+import pw.telm.telmbackend.exception.AppException;
 import pw.telm.telmbackend.mail.MailService;
 import pw.telm.telmbackend.model.DoctorLog;
 import pw.telm.telmbackend.model.PatientLog;

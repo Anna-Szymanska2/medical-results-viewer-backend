@@ -1,8 +1,8 @@
 package pw.telm.telmbackend.service;
 
-import pw.telm.telmbackend.dto.LoginDto;
-import pw.telm.telmbackend.dto.RegisterDto;
-import pw.telm.telmbackend.dto.UserDto;
+import pw.telm.telmbackend.DTOs.model.LoginDto;
+import pw.telm.telmbackend.DTOs.model.RegisterDto;
+import pw.telm.telmbackend.DTOs.model.UserDto;
 
 public interface UserService {
 
