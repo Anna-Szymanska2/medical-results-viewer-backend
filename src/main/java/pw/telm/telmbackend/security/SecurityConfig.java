@@ -1,5 +1,6 @@
 package pw.telm.telmbackend.security;
 
+import org.springframework.http.HttpMethod;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -39,9 +40,11 @@ public class SecurityConfig {
 
                 // Reguły autoryzacji
                 .authorizeHttpRequests(requests -> requests
-                        .requestMatchers("/**").permitAll()
-                        .anyRequest().authenticated()
+                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll() // Zezwól na OPTIONS
+                        .requestMatchers("/auth/**").permitAll() // Zezwól na logowanie/rejestrację
+                        .anyRequest().authenticated() // Wszystkie inne endpointy wymagają autoryzacji
                 );
+
 
         return http.build();
     }
