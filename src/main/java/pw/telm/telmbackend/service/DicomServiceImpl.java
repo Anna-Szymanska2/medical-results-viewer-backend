@@ -104,6 +104,7 @@ public class DicomServiceImpl implements DicomService{
             }
 
             Image image = DicomMetadataReader.returnImageFromDicom(dicomFilePath);
+            image.setPath(dicomFilePath);
             image.setSeries(series);
             series.getImages().add(image);
             //int imageId = addImage(image, seriesId, dicomFilePath);

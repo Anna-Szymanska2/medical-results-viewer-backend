@@ -1,14 +1,14 @@
 package pw.telm.telmbackend.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import pw.telm.telmbackend.model.Patient;
-import pw.telm.telmbackend.model.Study;
-import pw.telm.telmbackend.model.TextStudy;
+import pw.telm.telmbackend.model.*;
+import pw.telm.telmbackend.repository.DoctorLogRepository;
+import pw.telm.telmbackend.repository.PatientLogRepository;
 import pw.telm.telmbackend.repository.PatientRepository;
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.Date; // java.sql.Date
@@ -16,15 +16,46 @@ import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
+import static pw.telm.telmbackend.Generators.generateLogin;
+
 @Service
 public class PatientServiceImpl implements PatientService{
 
-    @Autowired
-    private PatientRepository patientRepository;
+
+    private final PatientRepository patientRepository;
+    private final PatientLogRepository patientLogRepository;
+    private final DoctorLogRepository doctorLogRepository;
+    private final DoctorService doctorService;
+
+    public PatientServiceImpl(PatientRepository patientRepository, PatientLogRepository patientLogRepository, DoctorLogRepository doctorLogRepository, DoctorService doctorService) {
+        this.patientRepository = patientRepository;
+        this.patientLogRepository = patientLogRepository;
+        this.doctorLogRepository = doctorLogRepository;
+        this.doctorService = doctorService;
+    }
+    @Transactional
+    public void findOrCreatePatient(String patientName, Integer doctorId){
+        Patient patient = patientRepository.findByName(patientName).orElse(null);
+        if(patient == null){
+            patient = new Patient();
+            patient.setName(patientName);
+            int login = generateLogin();
+            while (patientLogRepository.existsByLogin(login) || doctorLogRepository.existsByLogin(login)) {
+                login = generateLogin();
+            }
+            PatientLog patientLog = new PatientLog();
+            patientLog.setLogin(login);
+            patientLog.setPatient(patient);
+            patient.setPatientLog(patientLog);
+            Doctor doctor = doctorService.findDoctorById(doctorId);
+            patient.setDoctor(doctor);
+            patientRepository.save(patient);
+        }
+    }
 
     @Transactional
-    public void parseAndSaveStudy(String filePath, String patientName) {
-        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+    public void parseAndSaveStudy(String filePath, String patientName) throws IOException, IllegalArgumentException {
+            BufferedReader reader = new BufferedReader(new FileReader(filePath));
             // Odczyt pacjenta z bazy na podstawie nazwy
             Patient patient = patientRepository.findByName(patientName)
                     .orElseThrow(() -> new IllegalArgumentException("Patient not found with name: " + patientName));
@@ -47,6 +78,7 @@ public class PatientServiceImpl implements PatientService{
             study.setDescription(description);
             study.setText(true);
             study.setPatient(patient);
+            study.setPath(filePath);
 
             String line;
             List<TextStudy> textStudies = new ArrayList<>();
@@ -87,10 +119,6 @@ public class PatientServiceImpl implements PatientService{
             // Zapis pacjenta (i powiązanych encji Study oraz TextStudy dzięki CascadeType.ALL)
             patientRepository.save(patient);
 
-        } catch (IOException | IllegalArgumentException e) {
-            e.printStackTrace();
-            throw new RuntimeException("Error processing file: " + filePath, e);
-        }
     }
 
 }

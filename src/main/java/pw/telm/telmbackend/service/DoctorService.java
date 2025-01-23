@@ -8,6 +8,7 @@ public interface DoctorService {
     public void createDoctorWithLog(String name);
 
     List<String> getAllDoctors();
+    List<Doctor> getAllWholeDoctors();
 
     List<PatientDto> getPatientsByDoctorId(Integer id);
 

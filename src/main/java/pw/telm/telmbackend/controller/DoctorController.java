@@ -6,8 +6,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pw.telm.telmbackend.DTOs.model.PatientDto;
+import pw.telm.telmbackend.model.Doctor;
 import pw.telm.telmbackend.service.DoctorService;
 
+import javax.print.Doc;
 import java.util.List;
 
 /**
@@ -37,6 +39,10 @@ public class DoctorController {
         return ResponseEntity.ok(doctorService.getAllDoctors());
     }
 
+    @GetMapping("/all-whole")
+    public ResponseEntity<List<Doctor>> getAllWholeDoctors() {
+        return ResponseEntity.ok(doctorService.getAllWholeDoctors());
+    }
     /**
      * Retrieves a list of patients associated with a doctor specified by ID.
      *

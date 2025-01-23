@@ -1,5 +1,6 @@
 package pw.telm.telmbackend.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
@@ -16,9 +17,11 @@ public class Doctor {
     @Column(nullable = false)
     private String name;
 
+    @JsonIgnore
     @OneToOne(mappedBy = "doctor", cascade = CascadeType.ALL)
     private DoctorLog doctorLog;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL)
     private List<Patient> patients = new ArrayList<>();
 

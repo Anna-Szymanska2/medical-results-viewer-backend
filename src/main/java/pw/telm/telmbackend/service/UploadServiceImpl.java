@@ -22,15 +22,21 @@ public class UploadServiceImpl implements UploadService{
      * @throws DicomException if the uploaded file is not a valid DICOM file
      */
     @Override
-    public String saveFile(MultipartFile file) throws IOException {
-        Path dicomPath = Paths.get("src/main/resources/dicoms/");
-        if (!Files.exists(dicomPath)) {
-            Files.createDirectories(dicomPath);
+    public String saveFile(MultipartFile file, String startPath) throws IOException {
+        Path path = Paths.get(startPath);
+        if (!Files.exists(path)) {
+            Files.createDirectories(path);
         }
-        Path filePath = dicomPath.resolve(Objects.requireNonNull(file.getOriginalFilename()));
-        Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
+        Path filePath = path.resolve(Objects.requireNonNull(file.getOriginalFilename()));
+
+        // Poprawne zamknięcie InputStream po skopiowaniu pliku
+        try (InputStream inputStream = file.getInputStream()) {
+            Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
+        }
+
         return filePath.toString();
     }
+
 
     /**
      * Converts the uploaded multipart file to a {@link File}.
@@ -41,13 +47,18 @@ public class UploadServiceImpl implements UploadService{
      */
     @Override
     public File convert(MultipartFile file) throws IOException {
-        File tempDir = Files.createTempDirectory("dicom_temp").toFile();
+        // Używamy unikalnego folderu tymczasowego dla każdego pliku
+        File tempDir = Files.createTempDirectory("temp").toFile();
         File convFile = new File(tempDir, Objects.requireNonNull(file.getOriginalFilename()));
+
+        // Blok try-with-resources, aby upewnić się, że FileOutputStream jest zamknięty
         try (FileOutputStream fos = new FileOutputStream(convFile)) {
             fos.write(file.getBytes());
         }
+
         return convFile;
     }
+
 
     /**
      * Checks if the specified file is a valid DICOM file.
@@ -70,5 +81,11 @@ public class UploadServiceImpl implements UploadService{
             }
         }
         return true;
+    }
+
+    @Override
+    public boolean isTextFile(File file){
+        String fileName = file.getName().toLowerCase();
+        return fileName.endsWith(".txt");
     }
 }
