@@ -2,11 +2,6 @@ package pw.telm.telmbackend.DTOs.model;
 
 import java.util.List;
 
-
-/**
- * Data transfer object (DTO) representing a series of medical images.
- */
-
 public class SeriesDto {
     private Integer seriesId;
     private String modality;

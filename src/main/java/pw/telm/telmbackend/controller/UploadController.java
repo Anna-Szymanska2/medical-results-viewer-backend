@@ -19,17 +19,12 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * REST controller for handling file upload operations.
- * Provides an endpoint to upload DICOM files and save them to the database.
- */
+
 @RestController
 @RequestMapping("/upload")
 public class UploadController {
 
-    /**
-     * Service layer for performing upload operations.
-     */
+
     private final UploadService uploadService;
     private final DicomService dicomService;
     private final DoctorService doctorService;
@@ -43,13 +38,7 @@ public class UploadController {
         this.patientService = patientService;
     }
 
-    /**
-     * Handles file upload of DICOM files.
-     *
-     * @param file      the DICOM file to upload
-     * @param id_doctor the ID of the doctor associated with the uploaded file
-     * @return a {@link ResponseEntity} containing a map with a success message or error details
-     */
+
     @PostMapping("/dicom")
     public ResponseEntity<Map<String, Object>> uploadDicom(@RequestParam("file") MultipartFile file,
                                                            @RequestParam("doctor") Integer id_doctor) {

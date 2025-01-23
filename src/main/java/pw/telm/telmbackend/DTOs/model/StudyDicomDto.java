@@ -8,10 +8,6 @@ import java.sql.Time;
 import java.util.List;
 
 
-/**
- * Data transfer object (DTO) representing a study.
- */
-
 public class StudyDicomDto {
     private Integer idStudy;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Europe/Zagreb")

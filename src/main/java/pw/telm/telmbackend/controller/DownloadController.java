@@ -14,17 +14,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
 
-/**
- * REST controller for handling file download operations.
- * Provides an endpoint to download DICOM files by their ID.
- */
+
 @RestController
 @RequestMapping("/download")
 public class DownloadController {
 
-    /**
-     * Service layer for performing download operations.
-     */
+
     private final DownloadService downloadService;
 
     public DownloadController(DownloadService downloadService) {

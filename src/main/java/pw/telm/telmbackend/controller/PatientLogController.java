@@ -17,12 +17,6 @@ public class PatientLogController {
         this.patientLogService = patientLogService;
     }
 
-    /**
-     * Retrieves the login associated with the given patient ID.
-     *
-     * @param id the ID of the patient
-     * @return ResponseEntity containing the login ID
-     */
     @GetMapping("/{id}")
     public ResponseEntity<Integer> getPatientsById(@PathVariable Integer id) {
         return ResponseEntity.ok(patientLogService.getLoginById(id));

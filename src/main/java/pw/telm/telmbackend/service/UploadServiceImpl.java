@@ -13,14 +13,7 @@ import java.util.Objects;
 
 @Service
 public class UploadServiceImpl implements UploadService{
-    /**
-     * Saves the uploaded file to a predefined directory.
-     *
-     * @param file the {@link MultipartFile} to be saved
-     * @return a {@link String} representing the path where the file is saved
-     * @throws IOException    if an I/O exception occurs during file saving
-     * @throws DicomException if the uploaded file is not a valid DICOM file
-     */
+
     @Override
     public String saveFile(MultipartFile file, String startPath) throws IOException {
         Path path = Paths.get(startPath);
@@ -38,13 +31,7 @@ public class UploadServiceImpl implements UploadService{
     }
 
 
-    /**
-     * Converts the uploaded multipart file to a {@link File}.
-     *
-     * @param file the {@link MultipartFile} to be converted
-     * @return a {@link File} representing the converted file
-     * @throws IOException if an I/O exception occurs during file conversion
-     */
+
     @Override
     public File convert(MultipartFile file) throws IOException {
         // Używamy unikalnego folderu tymczasowego dla każdego pliku
@@ -60,12 +47,7 @@ public class UploadServiceImpl implements UploadService{
     }
 
 
-    /**
-     * Checks if the specified file is a valid DICOM file.
-     *
-     * @param file the {@link File} to be checked
-     * @return {@code true} if the file is a DICOM file; {@code false} otherwise
-     */
+
     @Override
     public boolean checkIfDicom(File file) throws IOException {
         byte[] asciiKey = new byte[]{68, 73, 67, 77};   //DICM in ASCII

@@ -5,10 +5,6 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import java.sql.Date;
 import java.util.Objects;
 
-/**
- * Data transfer object (DTO) representing a short version of a study.
- */
-
 public class ShortStudyDto {
     private Integer idStudy;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Europe/Zagreb")

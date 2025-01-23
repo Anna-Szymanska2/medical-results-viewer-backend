@@ -19,9 +19,7 @@ import java.util.Objects;
 import static pw.telm.telmbackend.DataConverter.convertDateFormat;
 import static pw.telm.telmbackend.DataConverter.convertTimeFormat;
 
-/**
- * Utility class to read DICOM metadata and extract information.
- */
+
 public class DicomMetadataReader {
 
     static AttributeList list = new AttributeList();
@@ -34,14 +32,7 @@ public class DicomMetadataReader {
         System.out.println(returnImageFromDicom(path));
     }
 
-    /**
-     * Extracts patient information from a DICOM file.
-     *
-     * @param dicomFilePath Path to the DICOM file.
-     * @return Patient object containing extracted patient information.
-     * @throws IOException    if an I/O error occurs.
-     * @throws DicomException if a DICOM related exception occurs.
-     */
+
     public static Patient returnPatientFromDicom(String dicomFilePath) throws IOException, DicomException {
         File dicomFile = new File(dicomFilePath);
 
@@ -60,14 +51,7 @@ public class DicomMetadataReader {
         list.clear();
         return patient;
     }
-    /**
-     * Extracts study information from a DICOM file.
-     *
-     * @param dicomFilePath Path to the DICOM file.
-     * @return Study object containing extracted study information.
-     * @throws IOException    if an I/O error occurs.
-     * @throws DicomException if a DICOM related exception occurs.
-     */
+
 
     public static Study returnStudyFromDicom(String dicomFilePath) throws IOException, DicomException {
         File dicomFile = new File(dicomFilePath);
@@ -93,14 +77,7 @@ public class DicomMetadataReader {
         list.clear();
         return study;
     }
-    /**
-     * Extracts series information from a DICOM file.
-     *
-     * @param dicomFilePath Path to the DICOM file.
-     * @return Series object containing extracted series information.
-     * @throws IOException    if an I/O error occurs.
-     * @throws DicomException if a DICOM related exception occurs.
-     */
+
     public static Series returnSeriesFromDicom(String dicomFilePath) throws IOException, DicomException {
         File dicomFile = new File(dicomFilePath);
 
@@ -116,27 +93,13 @@ public class DicomMetadataReader {
         return series;
     }
 
-    /**
-     * Checks if a DICOM file represents a Nuclear Medicine (NM) modality.
-     *
-     * @param file DICOM file to check.
-     * @return true if the modality is NM, false otherwise.
-     * @throws DicomException if a DICOM related exception occurs.
-     * @throws IOException    if an I/O error occurs.
-     */
+
     public static Boolean ifNM(File file) throws DicomException, IOException {
         list.read(file);
         return Objects.equals(getTagInformation(TagFromName.Modality), "NM");
     }
 
-    /**
-     * Extracts image information from a DICOM file.
-     *
-     * @param dicomFilePath Path to the DICOM file.
-     * @return Image object containing extracted image information.
-     * @throws IOException    if an I/O error occurs.
-     * @throws DicomException if a DICOM related exception occurs.
-     */
+
     public static Image returnImageFromDicom(String dicomFilePath) throws IOException, DicomException {
         File dicomFile = new File(dicomFilePath);
 
@@ -162,13 +125,7 @@ public class DicomMetadataReader {
         return image;
     }
 
-    /**
-     * Reads a DICOM file, extracts all frames, scales pixel values, and saves each frame as a PNG file.
-     * The pixel values are scaled to fit within the range [0, 255].
-     *
-     * @param dicomFilePath   the path to the DICOM file to read frames from
-     * @param outputFilePath  the directory path where the scaled frames will be saved as PNG files
-     */
+
     public static void saveAllFrames(String dicomFilePath, String outputFilePath) {
         try {
             AttributeList list = new AttributeList();
@@ -225,12 +182,7 @@ public class DicomMetadataReader {
         }
     }
 
-    /**
-     * Retrieves tag information from the DICOM attribute list for the specified attribute tag.
-     *
-     * @param attrTag the DICOM attribute tag to retrieve information for.
-     * @return the delimited string values of the specified attribute tag, or null if not found.
-     */
+
     private static String getTagInformation(AttributeTag attrTag) {
         return Attribute.getDelimitedStringValuesOrDefault(list, attrTag, null);
     }

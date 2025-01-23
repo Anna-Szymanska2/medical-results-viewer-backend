@@ -1,11 +1,6 @@
 package pw.telm.telmbackend.DTOs.model;
 
 
-
-/**
- * Data transfer object (DTO) representing a image.
- */
-
 public class ImageDto {
     private Integer idImage;
     private String type;

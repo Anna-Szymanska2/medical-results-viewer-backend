@@ -13,10 +13,7 @@ import pw.telm.telmbackend.service.UserService;
 import java.util.Collections;
 
 
-/**
- * REST controller for handling user authentication and registration.
- * Provides endpoints for user login and registration, returning user details with JWT tokens.
- */
+
 @RestController
 @RequestMapping("/auth")
 public class UserController {
