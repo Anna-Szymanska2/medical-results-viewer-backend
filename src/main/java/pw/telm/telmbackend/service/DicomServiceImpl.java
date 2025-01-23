@@ -9,7 +9,6 @@ import pw.telm.telmbackend.repository.*;
 
 import java.io.File;
 import java.io.IOException;
-import java.sql.Date;
 
 import static pw.telm.telmbackend.Generators.generateLogin;
 import static pw.telm.telmbackend.Generators.generatePesel;
@@ -31,7 +30,7 @@ public class DicomServiceImpl implements DicomService{
     private final SeriesRepository seriesRepository;
 
     @Transactional
-    public void addDicom(String dicomFilePath, Doctor doctor, int index){
+    public void addDicom(String dicomFilePath, Doctor doctor) {
         try {
             String outputPath = "src/main/resources/images";
             File images_folder = new File(outputPath);
@@ -105,6 +104,7 @@ public class DicomServiceImpl implements DicomService{
             }
 
             Image image = DicomMetadataReader.returnImageFromDicom(dicomFilePath);
+            image.setPath(dicomFilePath);
             image.setSeries(series);
             series.getImages().add(image);
             //int imageId = addImage(image, seriesId, dicomFilePath);

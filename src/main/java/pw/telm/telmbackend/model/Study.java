@@ -18,6 +18,7 @@ public class Study {
     private Date studyDate;
     private Time studyTime;
     private String uidStudy;
+    private String path;
 
     private boolean isText;
 
@@ -27,6 +28,7 @@ public class Study {
 
     @OneToMany(mappedBy = "study", cascade = CascadeType.ALL)
     private List<TextStudy> textStudies = new ArrayList<>();
+
 
     @OneToMany(mappedBy = "study", cascade = CascadeType.ALL)
     private List<Series> seriesList = new ArrayList<>();
@@ -71,6 +73,7 @@ public class Study {
         this.textStudies = textStudies;
     }
 
+
     public List<Series> getSeriesList() {
         return seriesList;
     }
@@ -101,6 +104,14 @@ public class Study {
 
     public void setText(boolean text) {
         isText = text;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
     }
 
     @Override

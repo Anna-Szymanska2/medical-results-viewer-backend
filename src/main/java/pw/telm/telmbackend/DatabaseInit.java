@@ -8,6 +8,8 @@ import pw.telm.telmbackend.service.DicomService;
 import pw.telm.telmbackend.service.DoctorService;
 import pw.telm.telmbackend.service.PatientService;
 
+import java.io.IOException;
+
 
 @Component
 public class DatabaseInit implements CommandLineRunner {
@@ -29,7 +31,7 @@ public class DatabaseInit implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        initializeDB();
+       // initializeDB();
 
 
 
@@ -38,21 +40,21 @@ public class DatabaseInit implements CommandLineRunner {
 
     }
 
-    public void initializeDB(){
+    public void initializeDB() throws IOException {
         doctorService.createDoctorWithLog("Janusz Bury");
         doctorService.createDoctorWithLog("Wiktor Bolibok");
         doctorService.createDoctorWithLog("Renata Szyc");
         Doctor doctor = doctorRepository.findByIdDoctor(1).orElse(null);
         for (int i = 0; i < 5; i++) {
-            dicomService.addDicom("src/main/resources/dicoms/dicom" + (i + 1) + ".dcm", doctor, i +1);
+            dicomService.addDicom("src/main/resources/dicoms/dicom" + (i + 1) + ".dcm", doctor);
         }
         doctor = doctorRepository.findByIdDoctor(2).orElse(null);
         for (int i = 5; i < 20; i++) {
-            dicomService.addDicom("src/main/resources/dicoms/dicom" + (i + 1) + ".dcm", doctor, i +1);
+            dicomService.addDicom("src/main/resources/dicoms/dicom" + (i + 1) + ".dcm", doctor);
         }
         doctor = doctorRepository.findByIdDoctor(3).orElse(null);
         for (int i = 20; i < 23; i++) {
-            dicomService.addDicom("src/main/resources/dicoms/dicom" + (i + 1), doctor, i +1);
+            dicomService.addDicom("src/main/resources/dicoms/dicom" + (i + 1), doctor);
         }
         patientService.parseAndSaveStudy("src/main/resources/text_studies/text1.txt", "Jolanta Kot");
         patientService.parseAndSaveStudy("src/main/resources/text_studies/text2.txt", "Jolanta Kot");
